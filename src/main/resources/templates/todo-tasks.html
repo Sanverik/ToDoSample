@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Tasks of ToDo List</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div th:replace="header :: navbar"></div>
+    <div class="main">
+        <div class="row justify-content-between">
+            <h1 th:text="'All Tasks From ' + ${todo.getOwner().getLastName()}+'`s ' + ${todo.getTitle()}"></h1>
+            <a class="btn btn-info m-2" th:href="@{'/tasks/create/todos/'+${todo.getId()}}" role="button">Create Task</a>
+        </div>
+        <div class="form-group row">
+            <h2>Tasks:</h2>
+            <table class="table">
+                <tr scope="row">
+                    <th scope="col">No.</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">State</th>
+                    <th colspan="2" scope="col">Operations</th>
+                </tr>
+                <tr scope="row" th:each="task, state : ${tasks}">
+                    <td><b th:text="${state.count}"></b></td>
+                    <td th:text="${task.getId()}"></td>
+                    <td><a th:text="${task.getName()}"></a></td>
+                    <td><a th:text="${task.getPriority().name()}"></a></td>
+                    <td th:text="${task.getState().getName()}"></td>
+                    <td><a th:href="@{'/tasks/'+${task.getId()}+'/update/todos/'+${todo.getId()}}">Edit</a></td>
+                    <td><a th:href="@{'/tasks/'+${task.getId()}+'/delete/todos/'+${todo.getId()}}">Remove</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="form-group row">
+            <h2>Collaborators:</h2>
+            <table class="table">
+                <tr scope="row" th:each="collaborator, state : ${collaborators}">
+                    <td><b th:text="${state.count}"></b></td>
+                    <td th:text="${collaborator.getFirstName()} + ' ' + ${collaborator.getLastName()}"></td>
+                    <td><a th:href="@{'/'}">Remove</a></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

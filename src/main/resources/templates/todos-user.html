@@ -32,11 +32,14 @@
                     <td th:text="${todo.getId()}"></td>
                     <td><a th:text="${todo.getTitle()}"th:href="@{'/todos/' + ${todo.getId()} + '/tasks'}"></a></td>
                     <td th:text="${todo.getCreatedAt()}"></td>
-                    <td th:text="${todo.getOwner().getFirstName()} + ' ' + ${todo.getOwner().getLastName()}"></td>
+                    <td th:text="${todo.getOwner()}"></td>
                     <td><a th:href="@{'/todos/' + ${todo.getId()} + '/update/users/' + ${user.getId()}}">Edit</a></td>
                     <td><a th:href="@{'/todos/' + ${todo.getId()} + '/delete/users/' + ${user.getId()}}">Remove</a></td>
                 </tr>
             </table>
+        </div>
+        <div class="row">
+            <a th:href="@{'/home'}" th:text="'Go to Home'"></a>
         </div>
     </div>
 </div>

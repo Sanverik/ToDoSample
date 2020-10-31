@@ -70,7 +70,15 @@ public class UserServiceImpl implements UserService {
 
         User user = readById(collaboratorId);
         ToDo toDo = toDoRepository.getById(todoId);
-        user.getOtherTodos().add(toDo);
-        update(user);
+
+        List<ToDo> userTodos = user.getMyTodos();
+        List<ToDo> collaborationsTodos = user.getOtherTodos();
+
+        if (!collaborationsTodos.contains(toDo) && !userTodos.contains(toDo)) {
+            collaborationsTodos.add(toDo);
+            update(user);
+        }
+
+        // generate warn\error maybe
     }
 }

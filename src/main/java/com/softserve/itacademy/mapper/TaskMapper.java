@@ -1,6 +1,7 @@
 package com.softserve.itacademy.mapper;
 
 import com.softserve.itacademy.dto.task.TaskCreateForm;
+import com.softserve.itacademy.dto.task.TaskInfoForm;
 import com.softserve.itacademy.dto.task.TaskUpdateForm;
 import com.softserve.itacademy.model.Priority;
 import com.softserve.itacademy.model.State;
@@ -24,7 +25,7 @@ public class TaskMapper {
         return task;
     }
 
-    public Task convertTaskUpdateFormToEntity(TaskUpdateForm taskUpdateForm, ToDo ownerToDo, State taskState){
+    public Task convertTaskUpdateFormToEntity(TaskUpdateForm taskUpdateForm, ToDo ownerToDo, State taskState) {
 
         Task task = new Task();
         task.setId(taskUpdateForm.getId());
@@ -36,7 +37,7 @@ public class TaskMapper {
         return task;
     }
 
-    public TaskUpdateForm convertEntityToTaskUpdateForm(Task task){
+    public TaskUpdateForm convertEntityToTaskUpdateForm(Task task) {
 
         TaskUpdateForm taskUpdateForm = new TaskUpdateForm();
 
@@ -46,6 +47,18 @@ public class TaskMapper {
         taskUpdateForm.setStatusId(task.getState().getId());
 
         return taskUpdateForm;
+    }
+
+    public TaskInfoForm convertEntityToTaskInfoForm(Task task) {
+
+        TaskInfoForm taskInfoForm = new TaskInfoForm();
+
+        taskInfoForm.setId(task.getId());
+        taskInfoForm.setName(task.getName());
+        taskInfoForm.setPriority(task.getPriority().name());
+        taskInfoForm.setState(task.getState().getName());
+
+        return taskInfoForm;
     }
 
 }

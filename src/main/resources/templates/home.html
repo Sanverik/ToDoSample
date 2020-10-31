@@ -27,8 +27,8 @@
                 </tr>
                 <tr scope="row" th:each="user, state : ${users}">
                     <td><b th:text="${state.count}"></b></td>
-                    <td th:text="${user.getId()}">Id</td>
-                    <td><a th:text="${user.getFullName()}" th:href="@{'/users/' + ${user.getId()} + '/read'}">FullName</a></td>
+                    <td><a th:text="${user.getId()}" th:href="@{'/users/' + ${user.getId()} + '/read'}" ></a></td>
+                    <td><a th:text="${user.getFullName()}" th:href="@{'todos/all/users/' + ${user.getId()} }">FullName</a></td>
                     <td th:text="${user.getEmail()}">Email</td>
                     <td><a th:href="@{'/users/' + ${user.getId()} + '/update'}">Edit</a></td>
                     <td><a th:href="@{'/users/' + ${user.getId()} + '/delete'}">Remove</a></td>

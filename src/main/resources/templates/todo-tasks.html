@@ -14,41 +14,58 @@
     <div class="main">
         <div class="row justify-content-between">
             <h1 th:text="'All Tasks From ' + ${todo.getOwner().getLastName()}+'`s ' + ${todo.getTitle()}"></h1>
-            <a class="btn btn-info m-2" th:href="@{'/tasks/create/todos/'+${todo.getId()}}" role="button">Create Task</a>
+            <a class="btn btn-info m-2" th:href="@{'/tasks/create/todos/'+${todo.getId()}}" role="button">Create
+                Task</a>
         </div>
-        <div class="form-group row">
-            <h2>Tasks:</h2>
-            <table class="table">
-                <tr scope="row">
-                    <th scope="col">No.</th>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">State</th>
-                    <th colspan="2" scope="col">Operations</th>
-                </tr>
-                <tr scope="row" th:each="task, state : ${tasks}">
-                    <td><b th:text="${state.count}"></b></td>
-                    <td th:text="${task.getId()}"></td>
-                    <td><a th:text="${task.getName()}"></a></td>
-                    <td><a th:text="${task.getPriority().name()}"></a></td>
-                    <td th:text="${task.getState().getName()}"></td>
-                    <td><a th:href="@{'/tasks/'+${task.getId()}+'/update/todos/'+${todo.getId()}}">Edit</a></td>
-                    <td><a th:href="@{'/tasks/'+${task.getId()}+'/delete/todos/'+${todo.getId()}}">Remove</a></td>
-                </tr>
-            </table>
+        <div class="form-group">
+            <div class="row"><h2>Tasks:</h2></div>
+            <div class="row">
+                <table class="table">
+                    <tr scope="row">
+                        <th scope="col">No.</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">State</th>
+                        <th colspan="2" scope="col">Operations</th>
+                    </tr>
+                    <tr scope="row" th:each="task, state : ${tasks}">
+                        <td><b th:text="${state.count}"></b></td>
+                        <td th:text="${task.getId()}"></td>
+                        <td><a th:text="${task.getName()}"></a></td>
+                        <td><a th:text="${task.getPriority()}"></a></td>
+                        <td th:text="${task.getState()}"></td>
+                        <td><a th:href="@{'/tasks/'+${task.getId()}+'/update/todos/'+${todo.getId()}}">Edit</a></td>
+                        <td><a th:href="@{'/tasks/'+${task.getId()}+'/delete/todos/'+${todo.getId()}}">Remove</a></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group">
             <h2>Collaborators:</h2>
-            <table class="table">
-                <tr scope="row" th:each="collaborator, state : ${collaborators}">
-                    <td><b th:text="${state.count}"></b></td>
-                    <td th:text="${collaborator.getFirstName()} + ' ' + ${collaborator.getLastName()}"></td>
-                    <td><a th:href="@{'/'}">Remove</a></td>
-                </tr>
-            </table>
+            <form method="POST" th:action="@{'/todos/'+${id}+ '/add'}" th:object="${todoForm}">
+
+                <select class="form-control" th:field="*{collaboratorId}">
+                    <option value="-1" selected hidden>Select collaborator...</option>
+                    <option th:each="user : ${users}" th:value="${user.getId()}"
+                            th:text="${user.getLastName()} + ' ' + ${user.getFirstName()}"></option>
+                </select>
+
+                <button type="submit" class="btn btn-light m-1">Add</button>
+            </form>
         </div>
 
+        <table class="table">
+            <tr scope="row" th:each="collaborator, state : ${collaborators}">
+                <td><b th:text="${state.count}"></b></td>
+                <td th:text="${collaborator.getFirstName()} + ' ' + ${collaborator.getLastName()}"></td>
+                <td><a th:href="@{'/todos/'+${todo.getId()}+'/remove/'+${collaborator.getId()}}">Remove</a></td>
+            </tr>
+        </table>
+        <div class="row">
+            <a th:href="@{'/todos/all/users/' + ${todo.getOwner().getId()}}" th:text="'Go to ToDo List'"></a>
+        </div>
     </div>
+</div>
 </body>
 </html>

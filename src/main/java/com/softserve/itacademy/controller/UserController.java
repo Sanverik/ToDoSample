@@ -1,7 +1,7 @@
 package com.softserve.itacademy.controller;
 
-import com.softserve.itacademy.dto.user.UserInfoForm;
 import com.softserve.itacademy.dto.user.UserCreateForm;
+import com.softserve.itacademy.dto.user.UserInfoForm;
 import com.softserve.itacademy.dto.user.UserUpdateForm;
 import com.softserve.itacademy.mapper.UserMapper;
 import com.softserve.itacademy.model.Role;
@@ -30,12 +30,14 @@ public class UserController {
 
     @GetMapping("/create")
     public String create(Model model) {
+
         model.addAttribute("user", new UserCreateForm());
         return "create-user";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("user") @Valid UserCreateForm userCreateForm, BindingResult bindingResult) {
+    public String create(@ModelAttribute("user") @Valid UserCreateForm userCreateForm,
+                         BindingResult bindingResult) {
 
         // confirm password check
         if (!userCreateForm.getPassword().equals(userCreateForm.getConfirmPassword())) {
@@ -56,7 +58,8 @@ public class UserController {
 
 
     @GetMapping("/{id}/read")
-    public String read(@PathVariable("id") long id, Model model) {
+    public String read(@PathVariable("id") long id,
+                       Model model) {
 
         User user = userService.readById(id);
 
@@ -66,7 +69,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}/update")
-    public String update(@PathVariable("id") long id, Model model) {
+    public String update(@PathVariable("id") long id,
+                         Model model) {
 
         User user = userService.readById(id);
         model.addAttribute("user", userMapper.convertEntityToUserUpdateForm(user));
@@ -78,7 +82,10 @@ public class UserController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") long id, @ModelAttribute("user") @Valid UserUpdateForm userUpdateForm, BindingResult bindingResult, Model model) {
+    public String update(@PathVariable("id") long id,
+                         @ModelAttribute("user") @Valid UserUpdateForm userUpdateForm,
+                         BindingResult bindingResult,
+                         Model model) {
 
         // old password check
         String userPassword = userService.readPassword(userUpdateForm.getId());

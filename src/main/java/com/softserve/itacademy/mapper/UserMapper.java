@@ -1,7 +1,7 @@
 package com.softserve.itacademy.mapper;
 
-import com.softserve.itacademy.dto.user.UserInfoForm;
 import com.softserve.itacademy.dto.user.UserCreateForm;
+import com.softserve.itacademy.dto.user.UserInfoForm;
 import com.softserve.itacademy.dto.user.UserUpdateForm;
 import com.softserve.itacademy.model.Role;
 import com.softserve.itacademy.model.User;

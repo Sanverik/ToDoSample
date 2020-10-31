@@ -30,8 +30,11 @@ public class TaskController {
     private final TaskMapper taskMapper;
 
     @GetMapping("/create/todos/{todo_id}")
-    public String create(@PathVariable("todo_id") long todoId, Model model) {
+    public String create(
+            @PathVariable("todo_id") long todoId,
+            Model model) {
 
+        model.addAttribute("todoId", todoId);
         model.addAttribute("task", new TaskCreateForm());
         model.addAttribute("priorities", Priority.values());
 
@@ -39,7 +42,10 @@ public class TaskController {
     }
 
     @PostMapping("/create/todos/{todo_id}")
-    public String create(Model model, @PathVariable("todo_id") long todoId, @ModelAttribute("task") @Valid TaskCreateForm taskCreateForm, BindingResult bindingResult) {
+    public String create(
+            Model model, @PathVariable("todo_id") long todoId,
+            @ModelAttribute("task") @Valid TaskCreateForm taskCreateForm,
+            BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("priorities", Priority.values());
@@ -56,7 +62,10 @@ public class TaskController {
     }
 
     @GetMapping("/{task_id}/update/todos/{todo_id}")
-    public String update(@PathVariable("task_id") long taskId, @PathVariable("todo_id") long todoId, Model model) {
+    public String update(
+            @PathVariable("task_id") long taskId,
+            @PathVariable("todo_id") long todoId,
+            Model model) {
 
         TaskUpdateForm task = taskMapper.convertEntityToTaskUpdateForm(taskService.readById(taskId));
         List<State> allStates = stateService.getAll();
@@ -68,7 +77,12 @@ public class TaskController {
     }
 
     @PostMapping("/{task_id}/update/todos/{todo_id}")
-    public String update(@PathVariable("task_id") long taskId, @PathVariable("todo_id") long todoId, @ModelAttribute("task") @Valid TaskUpdateForm taskUpdateForm, BindingResult bindingResult, Model model) {
+    public String update(
+            @PathVariable("task_id") long taskId,
+            @PathVariable("todo_id") long todoId,
+            @ModelAttribute("task") @Valid TaskUpdateForm taskUpdateForm,
+            BindingResult bindingResult,
+            Model model) {
 
         List<State> allStates = stateService.getAll();
 
@@ -89,7 +103,8 @@ public class TaskController {
     }
 
     @GetMapping("/{task_id}/delete/todos/{todo_id}")
-    public String delete(@PathVariable("task_id") long taskId, @PathVariable("todo_id") long todoId) {
+    public String delete(@PathVariable("task_id") long taskId,
+                         @PathVariable("todo_id") long todoId) {
 
         taskService.delete(taskId);
 
